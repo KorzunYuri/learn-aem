@@ -1,0 +1,12 @@
+<!-- /* productlist.html */ -->
+<div class="cmp-productlist"
+    data-sly-use.productList="com.adobe.aem.guides.wknd.core.models.ProductList">
+    <div class="cmp-productlist__title"
+         data-sly-test="${productList.title}">
+        ${productList.title}
+    </div>
+    <!--/*    TODO remove the following label, it's for debug purpose  */-->
+    <div>
+        ${productList.productsNumber} products to display
+    </div>
+</div>
