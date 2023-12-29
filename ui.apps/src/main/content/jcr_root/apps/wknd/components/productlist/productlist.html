@@ -6,7 +6,10 @@
         ${productList.title}
     </div>
     <!--/*    TODO remove the following label, it's for debug purpose  */-->
-    <div>
-        ${productList.productsNumber} products to display
+    <div data-sly-list.child="${productList.products}">
+        <div class="cmp-productlist__product">
+            <div class="cmp-productlist__product-title">${child.title}</div>
+            <div class="cmp-productlist__product-price">${child.price}</div>
+        </div>
     </div>
 </div>

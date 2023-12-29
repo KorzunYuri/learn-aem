@@ -707,6 +707,12 @@ Bundle-DocURL:
         <type>zip</type>
         <version>${core.wcm.components.version}</version>
       </dependency>
+
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.28</version>
+      </dependency>
       <!-- Testing -->
       <dependency>
         <groupId>org.junit</groupId>

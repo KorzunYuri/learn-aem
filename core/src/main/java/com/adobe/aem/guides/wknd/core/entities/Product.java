@@ -1,5 +1,7 @@
 package com.adobe.aem.guides.wknd.core.entities;
 
+import lombok.Getter;
+
 /**
  *  a product fetched from external API
  *  example of product JSON:
@@ -14,6 +16,7 @@ package com.adobe.aem.guides.wknd.core.entities;
  *       "count": 120
  *     }
  */
+@Getter
 public class Product {
     private int id;
     private String title;
