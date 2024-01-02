@@ -30,10 +30,21 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     emptyText="Enter the number of products to display"
-                                    fieldDescription="Number of products to display"
+                                    fieldDescription="Number of products to display, -1 to display all the products"
                                     fieldLabel="Number of products"
                                     name="./productsNumber"
                                     required="{Boolean}true"/>
+                            <shuffle
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    fieldDescription="Shuffle the list"
+                                    tooltipPosition="bottom"
+                                    fieldLabel="Shuffle the list"
+                                    text="Shuffle the list"
+                                    name="./shuffle"
+                                    value="{Boolean}true"
+                                    uncheckedValue="{Boolean}false"
+                                    checked="{Boolean}true"/>
                         </items>
                     </properties>
                 </items>
