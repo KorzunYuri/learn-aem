@@ -15,10 +15,10 @@ public class ProductServiceImplTest {
     void getProductsTest() {
         ProductServiceImpl service = new ProductServiceImpl();
         List<Product> emptyList = new ArrayList<>();
-        assertEquals(emptyList, service.getProducts(0));
+        assertEquals(emptyList, service.getProducts(ProductsRequestParams.builder().limit(0).build()));
 
-        assertEquals(1, service.getProducts(1).size());
-        assertEquals(10, service.getProducts(10).size());
+        assertEquals(1, service.getProducts(ProductsRequestParams.builder().limit(1).build()).size());
+        assertEquals(10, service.getProducts(ProductsRequestParams.builder().limit(10).build()).size());
     }
 
 }

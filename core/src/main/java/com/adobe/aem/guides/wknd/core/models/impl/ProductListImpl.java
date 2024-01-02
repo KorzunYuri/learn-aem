@@ -3,6 +3,7 @@ package com.adobe.aem.guides.wknd.core.models.impl;
 import com.adobe.aem.guides.wknd.core.entities.Product;
 import com.adobe.aem.guides.wknd.core.models.ProductList;
 import com.adobe.aem.guides.wknd.core.services.ProductService;
+import com.adobe.aem.guides.wknd.core.services.ProductsRequestParams;
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
@@ -34,7 +35,7 @@ public class ProductListImpl implements ProductList {
     private String title;
 
     @ValueMapValue
-    private Integer productsNumber;
+    private int productsNumber = PRODUCTS_LIMIT_ALL;
 
     @Override
     public String getTitle() {
@@ -42,18 +43,19 @@ public class ProductListImpl implements ProductList {
     }
 
     @Override
-    public Integer getProductsNumber() {
+    public int getProductsNumber() {
         return productsNumber;
     }
 
     @Override
     public List<Product> getProducts() {
-        return productService.getProducts(getProductsNumber());
+        return productService.getProducts(ProductsRequestParams.builder()
+                .limit(getProductsNumber())
+            .build());
     }
 
     @Override
     public boolean isEmpty() {
-        return  StringUtils.isBlank(getTitle())
-            &&  (productsNumber == null || productsNumber < 1);
+        return  StringUtils.isBlank(getTitle());
     }
 }

@@ -5,9 +5,12 @@ import com.adobe.aem.guides.wknd.core.entities.Product;
 import java.util.List;
 
 public interface ProductList {
+
+    int PRODUCTS_LIMIT_ALL = -1;
+
     String getTitle();
 
-    Integer getProductsNumber();
+    int getProductsNumber();
     List<Product> getProducts();
 
     boolean isEmpty();
