@@ -35,7 +35,7 @@ public class ProductListImpl implements ProductList {
     private String title;
 
     @ValueMapValue
-    private int productsNumber = PRODUCTS_LIMIT_ALL;
+    private int productsNumber = PRODUCTS_LIMIT_SHOW_ALL;
 
     @ValueMapValue
     private boolean shuffle;

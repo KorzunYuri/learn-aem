@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProductList {
 
-    int PRODUCTS_LIMIT_ALL = -1;
+    int PRODUCTS_LIMIT_SHOW_ALL = -1;
 
     String getTitle();
 

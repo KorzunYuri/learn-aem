@@ -1,6 +1,7 @@
 package com.adobe.aem.guides.wknd.core.services.impl;
 
 import com.adobe.aem.guides.wknd.core.entities.Product;
+import com.adobe.aem.guides.wknd.core.models.ProductList;
 import com.adobe.aem.guides.wknd.core.services.ProductService;
 import com.adobe.aem.guides.wknd.core.services.ProductsRequestParams;
 import com.google.gson.Gson;
@@ -19,23 +20,25 @@ import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Logger;
 
 @Component(service = ProductService.class)
 @Designate(ocd = ProductServiceImpl.ServiceConfig.class)
+@Getter //  the getters are used only to test config injection
 public class ProductServiceImpl implements ProductService {
 
     /*  properties definition  */
-
-    public final static String PROPERTY_NAME_SERVICE_NAME = "serviceName";
-    public final static String PROPERTY_NAME_API_URL = "apiUrl";
-    public final static String PROPERTY_NAME_UNUSED = "unused.property";
+    public static class Properties {
+        public static final String SERVICE_NAME = "serviceName";
+        public static final String API_URL = "apiUrl";
+        public static final String USE_FIXED_PRODUCTS_LIMIT = "useFixedProductsLimit";
+        public static final String FIXED_PRODUCTS_LIMIT = "fixedProductsLimit";
+        public static final String UNUSED = "unused.property";
+    }
 
     @ObjectClassDefinition(
             name = "Product service OSGI configuration"
@@ -58,6 +61,20 @@ public class ProductServiceImpl implements ProductService {
         String apiUrl() default "https://fakestoreapi.com/products";
 
         @AttributeDefinition(
+                name = "Use fixed products number limit"
+            ,   description = "Check to replace products limit provided by component"
+            ,   type = AttributeType.BOOLEAN
+        )
+        boolean useFixedProductsLimit() default false;
+
+        @AttributeDefinition(
+                name = "fixed products number limit"
+            ,   description = "fixed limit for products number to be applied instead of provided by component"
+            ,   type = AttributeType.SHORT
+        )
+        short fixedProductsLimit() default ProductList.PRODUCTS_LIMIT_SHOW_ALL;
+
+        @AttributeDefinition(
                 name = "unused property"
             ,   description = "Unused property with and ierarchic name to test property injection in the test class"
             ,   type = AttributeType.INTEGER
@@ -70,24 +87,25 @@ public class ProductServiceImpl implements ProductService {
     /* actual logic */
 
     //  the getters here are only to test config injection
-    @Getter
     private String serviceName;
-    @Getter
     private String URL_API_PRODUCTS_LIST;
-    @Getter
+    private boolean useFixedProductsLimit;
+    private short fixedProductsLimit;
     private int unusedProperty;
 
     @Activate
     protected void activate(ServiceConfig config) {
         this.URL_API_PRODUCTS_LIST  = config.apiUrl();
         this.serviceName            = config.serviceName();
+        this.useFixedProductsLimit  = config.useFixedProductsLimit();
+        this.fixedProductsLimit     = config.fixedProductsLimit();
         this.unusedProperty         = config.unused_property();
     }
 
     //  API doesn't provide the limit
     @Override
     public List<Product> getProducts(ProductsRequestParams params) {
-        final int limit = params.getLimit();
+        final int limit = useFixedProductsLimit ? getFixedProductsLimit() : params.getLimit();
         final boolean shuffle = params.isShuffle();
         if (limit == 0) return new ArrayList<>();
         HttpGet getRequest = new HttpGet(URL_API_PRODUCTS_LIST);
@@ -105,10 +123,9 @@ public class ProductServiceImpl implements ProductService {
             //  apply requested options
             if (shuffle) Collections.shuffle(products);
             return limit < 0 ? products : products.subList(0, limit);
-        } catch (IOException e) {
-            logger.info("Failed to retrieve data from API");
+        } catch (Exception e) {
+            logger.info(String.format("Failed to retrieve data from API, reason is %s - %s", e.getClass(), e.getMessage()));
             throw new RuntimeException(e);
         }
     }
-
 }
