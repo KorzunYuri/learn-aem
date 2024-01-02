@@ -37,6 +37,9 @@ public class ProductListImpl implements ProductList {
     @ValueMapValue
     private int productsNumber = PRODUCTS_LIMIT_ALL;
 
+    @ValueMapValue
+    private boolean shuffle;
+
     @Override
     public String getTitle() {
         return title;
@@ -51,6 +54,7 @@ public class ProductListImpl implements ProductList {
     public List<Product> getProducts() {
         return productService.getProducts(ProductsRequestParams.builder()
                 .limit(getProductsNumber())
+                .shuffle(shuffle)
             .build());
     }
 

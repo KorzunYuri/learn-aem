@@ -11,6 +11,7 @@ public interface ProductList {
     String getTitle();
 
     int getProductsNumber();
+
     List<Product> getProducts();
 
     boolean isEmpty();
