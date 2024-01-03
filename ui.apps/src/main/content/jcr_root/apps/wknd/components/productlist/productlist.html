@@ -1,4 +1,6 @@
 <!-- /* productlist.html */ -->
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"
+     data-sly-call="${clientlib.all @ categories='wknd.componentwise'}"/>
 <div class="cmp-productlist"
     data-sly-use.productList="com.adobe.aem.guides.wknd.core.models.ProductList">
     <div class="cmp-productlist__title"
