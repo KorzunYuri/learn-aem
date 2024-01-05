@@ -28,6 +28,14 @@
                                     cq:policy="wknd/components/text/policy_19700349104833"
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="wcm/core/components/policies/mapping"/>
+                            <title
+                                    cq:policy="wknd/components/title/policy_36105458633750"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="wcm/core/components/policies/mapping"/>
+                            <productlist
+                                    cq:policy="wknd/components/productlist/policy_1704277370365"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="wcm/core/components/policies/mapping"/>
                         </components>
                     </wknd>
                 </container>

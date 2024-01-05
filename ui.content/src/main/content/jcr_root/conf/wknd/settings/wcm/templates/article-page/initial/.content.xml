@@ -17,22 +17,6 @@
                 <image
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="wknd/components/image"/>
-                <container
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="wknd/components/container">
-                    <title
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="wknd/components/title"/>
-                    <title_1403531542
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="By author"
-                            sling:resourceType="wknd/components/title"
-                            linkTarget="_self"
-                            type="h4"/>
-                    <text
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="wknd/components/text"/>
-                </container>
                 <container_521202761
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="wknd/components/container">
@@ -55,6 +39,22 @@
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="wknd/components/list"/>
                 </container_521202761>
+                <container
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="wknd/components/container">
+                    <title
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="wknd/components/title"/>
+                    <title_1403531542
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="By author"
+                            sling:resourceType="wknd/components/title"
+                            linkTarget="_self"
+                            type="h4"/>
+                    <text
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="wknd/components/text"/>
+                </container>
             </container>
         </root>
         <cq:featuredimage
