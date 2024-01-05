@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
-          xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
-          jcr:mixinTypes="[rep:AccessControllable]"
-          jcr:primaryType="cq:Page">
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          xmlns:rep="internal"
+        jcr:mixinTypes="[rep:AccessControllable]"
+        jcr:primaryType="cq:Page">
     <rep:policy/>
     <wknd jcr:primaryType="nt:unstructured">
         <components jcr:primaryType="nt:unstructured">
@@ -166,13 +169,13 @@
                 </policy_641562756958017>
                 <policy_19700349104833
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Article Page - Container text"
+                        jcr:title="Content Text"
                         sling:resourceType="wcm/core/components/policy/policy">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                     <rtePlugins jcr:primaryType="nt:unstructured">
                         <paraformat
                                 jcr:primaryType="nt:unstructured"
-                                features="-">
+                                features="*">
                             <formats
                                     jcr:primaryType="nt:unstructured"
                                     override="true">
@@ -278,6 +281,17 @@
                                 jcr:primaryType="nt:unstructured"
                                 features="*"/>
                     </rtePlugins>
+                    <cq:styleGroups jcr:primaryType="nt:unstructured">
+                        <item0 jcr:primaryType="nt:unstructured">
+                            <cq:styles jcr:primaryType="nt:unstructured">
+                                <item0
+                                        cq:styleClasses="cmp-text--quote"
+                                        cq:styleId="1703681586340"
+                                        cq:styleLabel="Quote Block"
+                                        jcr:primaryType="nt:unstructured"/>
+                            </cq:styles>
+                        </item0>
+                    </cq:styleGroups>
                 </policy_19700349104833>
             </text>
             <title jcr:primaryType="nt:unstructured">
@@ -301,6 +315,26 @@
                         type="h2">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                 </policy_641528232375303>
+                <policy_36105458633750
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="WKND Title"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        allowedTypes="[h1,h2,h3,h4,h5,h6]"
+                        linkDisabled="false"
+                        type="h1">
+                    <jcr:content jcr:primaryType="nt:unstructured"/>
+                    <cq:styleGroups jcr:primaryType="nt:unstructured">
+                        <item0 jcr:primaryType="nt:unstructured">
+                            <cq:styles jcr:primaryType="nt:unstructured">
+                                <item0
+                                        cq:styleClasses="cmp-title--underline"
+                                        cq:styleId="1703680910639"
+                                        cq:styleLabel="Underline"
+                                        jcr:primaryType="nt:unstructured"/>
+                            </cq:styles>
+                        </item0>
+                    </cq:styleGroups>
+                </policy_36105458633750>
             </title>
             <experiencefragment jcr:primaryType="nt:unstructured">
                 <policy_header
@@ -463,7 +497,8 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Generic Page"
                         sling:resourceType="wcm/core/components/policy/policy"
-                        clientlibs="[wknd.dependencies,wknd.site]"
+                        clientlibs="[wknd.dependencies,wknd.site,wknd.custom]"
+                        clientlibsAsync="false"
                         clientlibsJsHead="wknd.dependencies">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                 </policy>
@@ -480,6 +515,37 @@
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                 </policy_1703521325887>
             </breadcrumb>
+            <productlist jcr:primaryType="nt:unstructured">
+                <policy_1704277370365
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Product List"
+                        sling:resourceType="wcm/core/components/policy/policy">
+                    <jcr:content jcr:primaryType="nt:unstructured"/>
+                    <cq:styleGroups jcr:primaryType="nt:unstructured">
+                        <item0
+                                cq:styleGroupLabel="ProductList styles"
+                                jcr:primaryType="nt:unstructured">
+                            <cq:styles jcr:primaryType="nt:unstructured">
+                                <item0
+                                        cq:styleClasses="cmp-productlist--style1"
+                                        cq:styleId="1704279162878"
+                                        cq:styleLabel="style1"
+                                        jcr:primaryType="nt:unstructured"/>
+                                <item1
+                                        cq:styleClasses="cmp-productlist--style2"
+                                        cq:styleId="1704279209523"
+                                        cq:styleLabel="style2"
+                                        jcr:primaryType="nt:unstructured"/>
+                                <item2
+                                        cq:styleClasses="cmp-productlist--style3"
+                                        cq:styleId="1704289528211"
+                                        cq:styleLabel="style3"
+                                        jcr:primaryType="nt:unstructured"/>
+                            </cq:styles>
+                        </item0>
+                    </cq:styleGroups>
+                </policy_1704277370365>
+            </productlist>
         </components>
     </wknd>
     <wcm jcr:primaryType="nt:unstructured">
