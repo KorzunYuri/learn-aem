@@ -6,4 +6,6 @@
     <xf-web-variation/>
     <rep:policy/>
     <article-page/>
+    <product-page/>
+    <product-page-manual-template/>
 </jcr:root>
