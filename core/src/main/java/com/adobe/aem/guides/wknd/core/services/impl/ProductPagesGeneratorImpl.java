@@ -61,7 +61,7 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
     public void updateProductPages() {
         if (StringUtils.isEmpty(pagesPathRoot)) {
             log.error("Page path root is not provided! Configure the service correctly");
-            throw new IllegalArgumentException(String.format("%s is not configured correctly", this.getClass().getName()));
+//            throw new IllegalArgumentException(String.format("%s is not configured correctly", this.getClass().getName()));
         }
         log.info("Pages are not being generated yet, but we work on it");
         try {
