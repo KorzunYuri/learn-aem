@@ -25,12 +25,11 @@
                                     <productid
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                            cq:showOnCreate="{Boolean}false"
+                                            cq:showOnCreate="{Boolean}true"
                                             fieldDescription="Product ID"
                                             fieldLabel="Product ID"
                                             name="./product/id"
                                             emptyText="Product ID here"
-                                            disabled="{Boolean}true"
                                             required="{Boolean}false"/>
                                 </items>
                             </column>
@@ -48,38 +47,35 @@
                                     <product
                                             jcr:primaryType="nt:unstructured"
                                             jcr:title="Product"
-                                            cq:showOnCreate="{Boolean}false"
+                                            cq:showOnCreate="{Boolean}true"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/fieldset">
                                         <items jcr:primaryType="nt:unstructured">
                                             <product-title
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    cq:showOnCreate="{Boolean}false"
+                                                    cq:showOnCreate="{Boolean}true"
                                                     fieldDescription="Product title"
                                                     fieldLabel="Product title"
                                                     name="./product/title"
                                                     emptyText="Product title"
-                                                    disabled="{Boolean}true"
                                                     required="{Boolean}false"/>
                                             <product-description
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    cq:showOnCreate="{Boolean}false"
+                                                    cq:showOnCreate="{Boolean}true"
                                                     fieldDescription="Product description"
                                                     fieldLabel="Product description"
                                                     name="./product/description"
                                                     emptyText="Product description"
-                                                    disabled="{Boolean}true"
                                                     required="{Boolean}false"/>
                                             <product-imagepath
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    cq:showOnCreate="{Boolean}false"
+                                                    cq:showOnCreate="{Boolean}true"
                                                     fieldDescription="Product image path"
                                                     fieldLabel="Product image path"
                                                     name="./product/image/path"
                                                     emptyText="Product image path"
-                                                    disabled="{Boolean}true"
                                                     required="{Boolean}false"/>
                                         </items>
                                     </product>
