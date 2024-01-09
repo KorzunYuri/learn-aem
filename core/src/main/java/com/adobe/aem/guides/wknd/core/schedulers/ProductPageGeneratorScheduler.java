@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.sling.commons.scheduler.ScheduleOptions;
 import org.apache.sling.commons.scheduler.Scheduler;
 import org.apache.sling.event.jobs.JobManager;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.*;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.AttributeType;
@@ -14,12 +15,12 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 import java.util.HashMap;
 
-@Component(
-        service = Runnable.class
-    ,   immediate = true
-    ,   configurationPolicy = ConfigurationPolicy.REQUIRE
-)
-@Designate(ocd = ProductPageGeneratorScheduler.Config.class)
+//@Component(
+//        service = Runnable.class
+//    ,   immediate = true
+//    ,   configurationPolicy = ConfigurationPolicy.REQUIRE
+//)
+//@Designate(ocd = ProductPageGeneratorScheduler.Config.class)
 @Slf4j
 public class ProductPageGeneratorScheduler implements Runnable{
 
@@ -85,7 +86,7 @@ public class ProductPageGeneratorScheduler implements Runnable{
     }
 
     @Activate
-    public void activate(Config config) throws IllegalArgumentException {
+    public void activate(ComponentContext context, Config config) throws IllegalArgumentException {
         onConfigChanged(config);
         addScheduler();
     }

@@ -74,7 +74,7 @@
                                                     cq:showOnCreate="{Boolean}true"
                                                     fieldDescription="Product image path"
                                                     fieldLabel="Product image path"
-                                                    name="./product/image/path"
+                                                    name="./product/image"
                                                     emptyText="Product image path"
                                                     required="{Boolean}false"/>
                                         </items>

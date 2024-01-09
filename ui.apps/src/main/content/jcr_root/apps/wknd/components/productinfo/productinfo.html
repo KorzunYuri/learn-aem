@@ -1,10 +1,16 @@
-<div>Product:</div>
-<div>
-    ${pageProperties["product/id"]}
-</div>
-<div>
-    ${pageProperties["product/title]"]}
-</div>
-<div>
-    ${pageProperties["product/description"]}
+<div class="cmp-productinfo">
+    <div class="cmp-productinfo__image-container">
+        <img
+                class="cmp-productinfo__image"
+                src="${pageProperties['product/image']}"
+                alt="${pageProperties['product/title']}">
+    </div>
+    <div class="cmp-productinfo__text-title">
+        <div class="cmp-productinfo__text-container">
+            ${pageProperties["product/title"]}
+        </div>
+        <div class="cmp-productinfo__text-description">
+            ${pageProperties["product/description"]}
+        </div>
+    </div>
 </div>

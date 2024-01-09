@@ -7,27 +7,31 @@ import com.adobe.aem.guides.wknd.core.services.ProductsRequestParams;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.sling.api.resource.LoginException;
+import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Component(service = ProductService.class)
 @Designate(ocd = ProductServiceImpl.ServiceConfig.class)
+@Slf4j
 @Getter //  the getters are used only to test config injection
 public class ProductServiceImpl implements ProductService {
 
@@ -82,7 +86,8 @@ public class ProductServiceImpl implements ProductService {
         int unused_property() default 1;
     }
 
-    private final Logger logger = Logger.getLogger(this.getClass().getName());
+    @Reference
+    private ResourceResolverFactory resourceResolverFactory;
 
     /* actual logic */
 
@@ -119,12 +124,12 @@ public class ProductServiceImpl implements ProductService {
             Gson gson = new Gson();
             Type type = new TypeToken<List<Product>>(){}.getType();
             List<Product> products = gson.fromJson(json, type);
-            logger.info(String.format("Retrieved %s records", products.size()));
+            log.info(String.format("Retrieved %s records", products.size()));
             //  apply requested options
             if (shuffle) Collections.shuffle(products);
             return limit < 0 ? products : products.subList(0, limit);
         } catch (Exception e) {
-            logger.info(String.format("Failed to retrieve data from API, reason is %s - %s", e.getClass(), e.getMessage()));
+            log.info(String.format("Failed to retrieve data from API, reason is %s - %s", e.getClass(), e.getMessage()));
             throw new RuntimeException(e);
         }
     }
