@@ -112,7 +112,7 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
             deleteOldPage(product, pageManager);
             Page newPage = createPage(product, resourceResolver, pageManager);
             if (newPage != null) {
-                log.error(String.format("created page from product %s", product));
+                log.info(String.format("created page from product %s", product));
             } else {
                 log.error(String.format("Unable to create page from product %s", product));
             };
