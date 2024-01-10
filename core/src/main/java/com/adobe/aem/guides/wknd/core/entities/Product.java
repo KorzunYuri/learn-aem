@@ -1,6 +1,7 @@
 package com.adobe.aem.guides.wknd.core.entities;
 
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  *  a product fetched from external API
@@ -17,8 +18,11 @@ import lombok.Getter;
  *     }
  */
 @Getter
+@ToString(onlyExplicitlyIncluded = true)
 public class Product {
+    @ToString.Include
     private int id;
+    @ToString.Include
     private String title;
     private float price;
     private String description;

@@ -27,17 +27,17 @@ public class ProductPagesGeneratorJobConsumer implements JobConsumer {
     @Override
     public JobResult process(Job job) {
         if (isProcessed) {
-            log.error("previous run of job %s is still being processed");
+            log.error(String.format("previous run of job %s is still being processed so the new job is cancelled", JobTopics.PRODUCT_PAGES_GENERATION));
             return JobResult.CANCEL;
         } else {
             try {
                 isProcessed = true;
-                log.info(String.format("Job %s has been consumed", job));
+                log.info(String.format("Job %s has been consumed", job.getId()));
                 pagesGenerator.updateProductPages();
-                log.info(String.format("Job %s complete", job));
+                log.info(String.format("Job %s complete", job.getId()));
                 return JobResult.OK;
             } catch (Exception e) {
-                log.error(String.format("Job %s failed", job.getId()));
+                log.error(String.format("Job %s failed: %s", job.getId(), e.getMessage()));
                 return JobResult.FAILED;
             } finally {
                 isProcessed = false;
