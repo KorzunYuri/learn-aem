@@ -61,9 +61,12 @@ public class ProductPageGeneratorSchedulerWithBuilderApproach {
         this.cronExpression = config.cronExpression();
 
         //  unregister all jobs
-        Collection<ScheduledJobInfo> jobs = jobManager.getScheduledJobs(TOPIC, 1 ,null);
+        Collection<ScheduledJobInfo> jobs = jobManager.getScheduledJobs(TOPIC, -1 ,null);
         if (!jobs.isEmpty()) {
-            jobs.forEach(ScheduledJobInfo::unschedule);
+            jobs.forEach(j -> {
+                j.unschedule();
+                log.info(String.format("Unscheduled job %s supposed to run on %s", TOPIC, j.getNextScheduledExecution()));
+            });
         }
 
         //  schedule the job
