@@ -68,6 +68,14 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.apache.sling</groupId>
+            <artifactId>org.apache.sling.jcr.repoinit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.sling</groupId>
+            <artifactId>org.apache.sling.repoinit.parser</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.adobe.aem.guides</groupId>
             <artifactId>aem-guides-wknd.ui.apps.structure</artifactId>
             <version>${project.version}</version>

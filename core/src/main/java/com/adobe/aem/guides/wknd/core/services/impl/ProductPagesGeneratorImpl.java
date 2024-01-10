@@ -6,12 +6,16 @@ import com.adobe.aem.guides.wknd.core.services.ProductService;
 import com.adobe.aem.guides.wknd.core.services.ProductsRequestParams;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
-import com.day.cq.wcm.api.PageManagerFactory;
 import com.day.cq.wcm.api.WCMException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.sling.api.resource.*;
-import org.osgi.service.component.annotations.*;
+import org.apache.sling.api.resource.LoginException;
+import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ResourceResolverFactory;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.Designate;
@@ -102,21 +106,22 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
         }
 
         //  get JCR/page tools
-        ResourceResolver resourceResolver = getResourceResolver();
-        String userId = resourceResolver.getUserID();
-        log.info("Got resourceResolver for user " + userId);
-        PageManager pageManager = resourceResolver.adaptTo(PageManager.class);
+        try (ResourceResolver resourceResolver = getResourceResolver()) {
+            String userId = resourceResolver.getUserID();
+            log.info("Got resourceResolver for user " + userId);
+            PageManager pageManager = resourceResolver.adaptTo(PageManager.class);
 
-        //  create new pages
-        products.forEach(product -> {
-            deleteOldPage(product, pageManager);
-            Page newPage = createPage(product, resourceResolver, pageManager);
-            if (newPage != null) {
-                log.info(String.format("created page from product %s", product));
-            } else {
-                log.error(String.format("Unable to create page from product %s", product));
-            };
-        });
+            //  create new pages
+            products.forEach(product -> {
+                deleteOldPage(product, pageManager);
+                Page newPage = createPage(product, resourceResolver, pageManager);
+                if (newPage != null) {
+                    log.info(String.format("created page from product %s", product));
+                } else {
+                    log.error(String.format("Unable to create page from product %s", product));
+                };
+            });
+        }
 
         log.info("Pages generation is complete");
     }
@@ -215,7 +220,7 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
 
     private Map<String, Object> getServiceParams() {
         Map<String, Object> params = new HashMap<>();
-        params.put(ResourceResolverFactory.SUBSERVICE, "productService");
+        params.put(ResourceResolverFactory.SUBSERVICE, "testServiceUser");
         return params;
     }
 
