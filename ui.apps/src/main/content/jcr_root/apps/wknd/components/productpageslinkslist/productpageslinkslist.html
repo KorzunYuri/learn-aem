@@ -1,0 +1,13 @@
+<div class="cmp-productpageslinkslist"
+     data-cmp-is="productpageslinkslist"
+     data-sly-use.linksListModel="com.adobe.aem.guides.wknd.core.models.ProductPagesListModel">
+    <div class="cmp-productpageslinkslist__title"
+         data-sly-test="${linksListModel.title}">
+        ${linksListModel.title}
+    </div>
+    <div data-sly-list.child="${linksListModel.productPagesLinks}">
+        <div>
+            <a class="cmp-productpageslinkslist__productlink" href="${child.link}">${child.title}</a>
+        </div>
+    </div>
+</div>

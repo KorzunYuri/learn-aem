@@ -128,6 +128,11 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
         log.info("Pages generation is complete");
     }
 
+    @Override
+    public String getPagesRoot() {
+        return pagesPathRoot;
+    }
+
     private void deleteOldPage(Product product, PageManager pageManager) {
         String pagePath = getPagePath(product);
         //  TODO compare to the page properties and don't remove if they haven't changed
