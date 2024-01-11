@@ -16,8 +16,10 @@
             <div class="cmp-productinfo__text-description">
                 ${pageProperties["product/description"]}
             </div>
-            <div class="cmp-productinfo__asset-info">
-                ${productInfo.assetInfo}
+            <div data-sly-list.child="${productInfo.assetProperties}">
+                <div class="cmp-productinfo__productinfo-asset">
+                    ${child}
+                </div>
             </div>
         </div>
     </div>
