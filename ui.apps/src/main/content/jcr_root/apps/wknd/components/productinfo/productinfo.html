@@ -3,22 +3,24 @@
      data-sly-call="${clientlib.all @ categories='wknd.components.productinfo'}"/>
 <sly data-sly-use.productInfo="${'com.adobe.aem.guides.wknd.core.models.ProductInfoModel'@imageUri=pageProperties['product/image']}">
     <div class="cmp-productinfo">
-        <div class="cmp-productinfo__image-container cmp-productinfo__container">
-            <img
-                    class="cmp-productinfo__image"
-                    src="${pageProperties['product/image']}"
-                    alt="${pageProperties['product/title']}">
-        </div>
-        <div class="cmp-productinfo__text-container cmp-productinfo__container">
-            <div class="cmp-productinfo__text-title">
-                ${pageProperties["product/title"]}
+        <div>
+            <div class="cmp-productinfo__image-container cmp-productinfo__container">
+                <img
+                        class="cmp-productinfo__image"
+                        src="${pageProperties['product/image']}"
+                        alt="${pageProperties['product/title']}">
             </div>
-            <div class="cmp-productinfo__text-description">
-                ${pageProperties["product/description"]}
-            </div>
-            <div data-sly-list.child="${productInfo.assetProperties}">
-                <div class="cmp-productinfo__productinfo-asset">
-                    ${child}
+            <div class="cmp-productinfo__text-container cmp-productinfo__container">
+                <div class="cmp-productinfo__text-title">
+                    ${pageProperties["product/title"]}
+                </div>
+                <div class="cmp-productinfo__text-description">
+                    ${pageProperties["product/description"]}
+                </div>
+                <div data-sly-list.child="${productInfo.assetProperties}">
+                    <div class="cmp-productinfo__productinfo-asset">
+                        ${child}
+                    </div>
                 </div>
             </div>
         </div>

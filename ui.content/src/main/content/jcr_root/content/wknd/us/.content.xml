@@ -7,7 +7,8 @@
             cq:template="/conf/wknd/settings/wcm/templates/page-content"
             jcr:primaryType="cq:PageContent"
             jcr:title="Language Master"
-            sling:resourceType="wknd/components/page">
+            sling:resourceType="wknd/components/page"
+            sling:configRef="/conf/wknd/sling:configs/us">
         <cq:featuredimage
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="core/wcm/components/image/v3/image"

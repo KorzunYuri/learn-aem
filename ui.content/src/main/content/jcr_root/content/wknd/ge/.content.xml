@@ -8,6 +8,7 @@
             cq:template="/conf/wknd/settings/wcm/templates/page-content"
             jcr:mixinTypes="[cq:LiveSync]"
             jcr:primaryType="cq:PageContent"
+            sling:configRef="/conf/wknd/sling:configs/ge"
             jcr:title="Germany"
             sling:resourceType="wknd/components/page">
         <cq:LiveSyncConfig

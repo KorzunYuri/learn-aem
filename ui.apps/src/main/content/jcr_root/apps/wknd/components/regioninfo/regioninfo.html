@@ -1,0 +1,8 @@
+<div data-sly-use.regioninfo="com.adobe.aem.guides.wknd.core.models.RegionInfo"
+     class="cmp-regioninfo">
+    <div class="cmp-regioninfo__configpath"  >Config : ${regioninfo.configPath}</div>
+    <div data-sly-test="${regioninfo.countryCode}">
+        <div class="cmp-regioninfo__countrycode" >Country: ${regioninfo.countryCode}</div>
+        <div class="cmp-regioninfo__supportemail">Email:   ${regioninfo.supportEmail}</div>
+    </div>
+</div>

@@ -10,6 +10,7 @@
             jcr:primaryType="cq:PageContent"
             jcr:title="Home"
             sling:resourceType="wknd/components/page"
+            sling:configRef="/conf/wknd/sling:configs/ge/en"
             pageTitle="WKND Sites Project">
         <root
                 jcr:mixinTypes="[cq:LiveRelationship]"
