@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          jcr:primaryType="cq:Page">
+    <jcr:content
+            cq:redirectTarget="/content/wknd/ge/en"
+            cq:siteOwner="admin"
+            cq:template="/conf/wknd/settings/wcm/templates/page-content"
+            jcr:mixinTypes="[cq:LiveSync]"
+            jcr:primaryType="cq:PageContent"
+            jcr:title="Germany"
+            sling:resourceType="wknd/components/page">
+        <cq:LiveSyncConfig
+                cq:isDeep="{Boolean}false"
+                cq:master="/content/wknd/us"
+                cq:rolloutConfigs="[/libs/msm/wcm/rolloutconfigs/default]"
+                jcr:primaryType="cq:LiveCopy"/>
+    </jcr:content>
+    <en/>
+    <de/>
+</jcr:root>
