@@ -14,8 +14,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.apache.sling.api.resource.LoginException;
-import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -27,7 +25,6 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 import java.lang.reflect.Type;
 import java.util.*;
-import java.util.logging.Logger;
 
 @Component(service = ProductService.class)
 @Designate(ocd = ProductServiceImpl.ServiceConfig.class)

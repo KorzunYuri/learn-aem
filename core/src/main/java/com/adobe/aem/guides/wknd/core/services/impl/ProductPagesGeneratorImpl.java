@@ -4,6 +4,7 @@ import com.adobe.aem.guides.wknd.core.entities.Product;
 import com.adobe.aem.guides.wknd.core.services.ProductPagesGenerator;
 import com.adobe.aem.guides.wknd.core.services.ProductService;
 import com.adobe.aem.guides.wknd.core.services.ProductsRequestParams;
+import com.adobe.aem.guides.wknd.core.services.access.impl.ProductResourceResolverProvider;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.PageManagerFactory;
@@ -44,7 +45,7 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
     private ProductService productService;
 
     @Reference
-    private ResourceResolverFactory resourceResolverFactory;
+    private ProductResourceResolverProvider resourceResolverProvider;
 
     @Reference
     private PageManagerFactory pageManagerFactory;
@@ -108,7 +109,7 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
         }
 
         //  get JCR/page tools
-        try (ResourceResolver resourceResolver = getResourceResolver()) {
+        try (ResourceResolver resourceResolver = resourceResolverProvider.getResourceResolver()) {
             String userId = resourceResolver.getUserID();
             log.info("Got resourceResolver for user " + userId);
             PageManager pageManager = pageManagerFactory.getPageManager(resourceResolver);
@@ -236,21 +237,5 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
         return String.format("product%s", product.getId());
     }
 
-    private ResourceResolver getResourceResolver() {
-        ResourceResolver resolver = null;
-        Map<String, Object> params = getServiceParams();
-        try {
-            resolver = resourceResolverFactory.getServiceResourceResolver(params);
-        } catch (LoginException e) {
-            log.info(String.format("Failed to get resource resolver with params %s", params));
-        }
-        return resolver;
-    }
-
-    private Map<String, Object> getServiceParams() {
-        Map<String, Object> params = new HashMap<>();
-        params.put(ResourceResolverFactory.SUBSERVICE, "testServiceUser");
-        return params;
-    }
 
 }
