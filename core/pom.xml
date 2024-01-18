@@ -26,6 +26,11 @@
     <artifactId>aem-guides-wknd.core</artifactId>
     <name>WKND Sites Project - Core</name>
     <description>Core bundle for WKND Sites Project</description>
+
+    <properties>
+        <product.page.resourceType>wknd/components/productpage</product.page.resourceType>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -216,6 +221,10 @@ Import-Package: javax.annotation;version=0.0.0,*
             <artifactId>xercesImpl</artifactId>
             <version>2.12.2</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
         </dependency>
         <!-- Required to be able to support injection with @Self and @Via -->
         <dependency>
