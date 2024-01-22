@@ -116,11 +116,15 @@ public class ProductServiceImpl implements ProductService {
             CloseableHttpResponse response = httpClient.execute(getRequest);
         ){
             HttpEntity entity = response.getEntity();
-            String json = EntityUtils.toString(entity);
+            int statusCode = response.getStatusLine().getStatusCode();
+            String body = EntityUtils.toString(entity);
+            if (statusCode != 200) {
+                throw new RuntimeException(String.format("Failed to fetch data from API: response code: %s, message: %S", statusCode, body));
+            }
             //  parse the response
             Gson gson = new Gson();
             Type type = new TypeToken<List<Product>>(){}.getType();
-            List<Product> products = gson.fromJson(json, type);
+            List<Product> products = gson.fromJson(body, type);
             log.info(String.format("Retrieved %s records", products.size()));
             //  apply requested options
             if (shuffle) Collections.shuffle(products);
