@@ -1,6 +1,6 @@
 package com.adobe.aem.guides.wknd.core.models;
 
-import com.adobe.aem.guides.wknd.core.entities.ProductPageLink;
+import com.adobe.aem.guides.wknd.core.domains.product.ProductPageLink;
 
 import java.util.List;
 

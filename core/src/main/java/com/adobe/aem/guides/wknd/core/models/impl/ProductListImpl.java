@@ -1,6 +1,6 @@
 package com.adobe.aem.guides.wknd.core.models.impl;
 
-import com.adobe.aem.guides.wknd.core.entities.Product;
+import com.adobe.aem.guides.wknd.core.domains.product.Product;
 import com.adobe.aem.guides.wknd.core.models.ProductList;
 import com.adobe.aem.guides.wknd.core.services.ProductService;
 import com.adobe.aem.guides.wknd.core.services.ProductsRequestParams;

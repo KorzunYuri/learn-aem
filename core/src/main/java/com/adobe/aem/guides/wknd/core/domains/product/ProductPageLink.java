@@ -1,4 +1,4 @@
-package com.adobe.aem.guides.wknd.core.entities;
+package com.adobe.aem.guides.wknd.core.domains.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

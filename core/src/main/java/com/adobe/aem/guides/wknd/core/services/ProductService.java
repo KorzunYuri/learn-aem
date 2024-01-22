@@ -1,6 +1,6 @@
 package com.adobe.aem.guides.wknd.core.services;
 
-import com.adobe.aem.guides.wknd.core.entities.Product;
+import com.adobe.aem.guides.wknd.core.domains.product.Product;
 
 import java.util.List;
 

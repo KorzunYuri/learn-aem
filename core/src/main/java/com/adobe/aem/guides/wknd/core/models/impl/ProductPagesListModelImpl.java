@@ -1,7 +1,7 @@
 package com.adobe.aem.guides.wknd.core.models.impl;
 
 import com.adobe.aem.guides.wknd.core.domains.product.ProductConstants;
-import com.adobe.aem.guides.wknd.core.entities.ProductPageLink;
+import com.adobe.aem.guides.wknd.core.domains.product.ProductPageLink;
 import com.adobe.aem.guides.wknd.core.models.ProductPagesListModel;
 import com.adobe.aem.guides.wknd.core.services.ProductPagesGenerator;
 import lombok.extern.slf4j.Slf4j;

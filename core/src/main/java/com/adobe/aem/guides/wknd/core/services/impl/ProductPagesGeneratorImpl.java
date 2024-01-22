@@ -1,7 +1,7 @@
 package com.adobe.aem.guides.wknd.core.services.impl;
 
 import com.adobe.aem.guides.wknd.core.domains.product.ProductConstants;
-import com.adobe.aem.guides.wknd.core.entities.Product;
+import com.adobe.aem.guides.wknd.core.domains.product.Product;
 import com.adobe.aem.guides.wknd.core.services.ProductPagesGenerator;
 import com.adobe.aem.guides.wknd.core.services.ProductPagesListRequest;
 import com.adobe.aem.guides.wknd.core.services.ProductService;
