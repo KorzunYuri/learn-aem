@@ -1,6 +1,7 @@
 package com.adobe.aem.guides.wknd.core.servlets;
 
 import com.adobe.aem.guides.wknd.core.services.ProductPagesGenerator;
+import com.adobe.aem.guides.wknd.core.services.access.RunModeProvider;
 import com.adobe.aem.guides.wknd.core.services.access.impl.ProductResourceResolverProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -40,21 +41,28 @@ public class ProductPagesListServlet extends SlingSafeMethodsServlet {
     @Reference
     private ProductPagesGenerator productPagesGenerator;
 
+    @Reference
+    private RunModeProvider runModeProvider;
+
     @Override
     protected void doGet(@NotNull SlingHttpServletRequest request, @NotNull SlingHttpServletResponse response) throws ServletException, IOException {
-        ResourceResolver resourceResolver = resourceResolverProvider.getResourceResolver();
-        List<String> pagesPaths = productPagesGenerator.getPagesLinks();
-        JSONObject result = new JSONObject();
-        JSONArray pagesArray = new JSONArray();
-        try {
-            for (String path : pagesPaths) {
-                pagesArray.put(makePageJson(path, resourceResolver));
-            }
-            result.put("pages", pagesArray);
-        } catch (Exception e) {
-            log.error(String.format("Failed to export product pages"));
+        if (!isProcessingRequired()) {
+            throw new IllegalStateException(String.format("Servlet %s is supposed to be used on publish environment only", this.getClass().getName()));
         }
-        response.getWriter().write(result.toString());
+        try (ResourceResolver resourceResolver = resourceResolverProvider.getResourceResolver()) {
+            List<String> pagesPaths = productPagesGenerator.getPagesLinks();
+            JSONObject result = new JSONObject();
+            JSONArray pagesArray = new JSONArray();
+            try {
+                for (String path : pagesPaths) {
+                    pagesArray.put(makePageJson(path, resourceResolver));
+                }
+                result.put("pages", pagesArray);
+            } catch (Exception e) {
+                log.error(String.format("Failed to export product pages"));
+            }
+            response.getWriter().write(result.toString());
+        }
     }
 
     private JSONObject makePageJson(String path, ResourceResolver resourceResolver) throws org.json.JSONException {
@@ -71,4 +79,9 @@ public class ProductPagesListServlet extends SlingSafeMethodsServlet {
         page.put("link", path);
         return page;
     }
+
+    private boolean isProcessingRequired() {
+        return this.runModeProvider.isPublish();
+    }
+
 }

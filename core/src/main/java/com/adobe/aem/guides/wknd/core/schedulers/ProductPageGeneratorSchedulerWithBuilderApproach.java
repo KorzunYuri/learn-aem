@@ -1,6 +1,7 @@
 package com.adobe.aem.guides.wknd.core.schedulers;
 
 import com.adobe.aem.guides.wknd.core.jobs.JobTopics;
+import com.adobe.aem.guides.wknd.core.services.access.RunModeProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.event.jobs.JobBuilder;
@@ -33,6 +34,9 @@ public class ProductPageGeneratorSchedulerWithBuilderApproach {
 
     private String cronExpression;
 
+    @Reference
+    private RunModeProvider runModeProvider;
+
     @ObjectClassDefinition(description = "Product list updates scheduler configuration")
     public @interface Config {
 
@@ -53,6 +57,12 @@ public class ProductPageGeneratorSchedulerWithBuilderApproach {
 
     @Activate
     public void activate(Config config) {
+
+        if (!runModeProvider.isAuthor()) {
+            log.info("Product page generation is for author instance only");
+            return;
+        }
+
         log.info(String.format("Scheduling ProductPageGeneratorSchedulerWithBuilderApproach, previous cron: %s , new cron: %s", this.cronExpression, config.cronExpression()));
         if (StringUtils.equals(config.cronExpression(), this.cronExpression)) {
             log.info("Crons are similar, skipping scheduling");

@@ -6,6 +6,7 @@ import com.adobe.aem.guides.wknd.core.services.ProductPagesGenerator;
 import com.adobe.aem.guides.wknd.core.services.ProductPagesListRequest;
 import com.adobe.aem.guides.wknd.core.services.ProductService;
 import com.adobe.aem.guides.wknd.core.services.ProductsRequestParams;
+import com.adobe.aem.guides.wknd.core.services.access.RunModeProvider;
 import com.adobe.aem.guides.wknd.core.services.access.impl.ProductResourceResolverProvider;
 import com.day.cq.search.PredicateGroup;
 import com.day.cq.search.Query;
@@ -65,6 +66,9 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
     @Reference
     private QueryBuilder queryBuilder;
 
+    @Reference
+    private RunModeProvider runModeProvider;
+
     @ObjectClassDefinition(
             name = "Product pages generator configuration"
         ,   description = "Defines pages path and other options"
@@ -107,6 +111,9 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
 
     @Override
     public void updateProductPages() {
+        if (!runModeProvider.isAuthor()) {
+            throw new IllegalStateException("Product page generation is for author instance only");
+        }
         if (StringUtils.isEmpty(pagesPathRoot)) {
             log.error("Page path root is not provided! Configure the service correctly");
             throw new IllegalArgumentException(String.format("%s is not configured correctly", this.getClass().getName()));
@@ -165,8 +172,8 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
             return result;
         }
         //  make a query
-        try {
-            Session session = resourceResolverProvider.getResourceResolver().adaptTo(Session.class);
+        try (ResourceResolver resourceResolver = resourceResolverProvider.getResourceResolver()){
+            Session session = resourceResolver.adaptTo(Session.class);
             Map<String, String> queryParams = new HashMap<>();
             queryParams.put("path", pagesPathRoot);
             queryParams.put("type", "cq:Page");
