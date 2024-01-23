@@ -13,8 +13,12 @@ import org.apache.sling.models.annotations.*;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.adobe.aem.guides.wknd.core.models.exporters.JaxbModelExporter.EXPORTER_NAME;
 
 @Model(
         adaptables      = {SlingHttpServletRequest.class}
@@ -39,11 +43,16 @@ import java.util.List;
             ,   options = {
                    @ExporterOption(name = "MapperFeature.SORT_PROPERTIES_ALPHABETICALLY", value = "true")
             }
+        ),
+        @Exporter(
+                name = EXPORTER_NAME
+            ,   extensions = "xml"
         )
     }
 )
 
 @Slf4j
+@XmlRootElement
 public class ProductPagesListModelImpl extends ProductListImpl implements ProductPagesListModel{
 
     protected static final String RESOURCE_TYPE = "wknd/components/productpageslinkslist";
@@ -55,6 +64,7 @@ public class ProductPagesListModelImpl extends ProductListImpl implements Produc
     private ProductPagesGenerator productPagesGenerator;
 
     @Override
+    @XmlElement
     public List<ProductPageLink> getProductPagesLinks() {
         List<String> pagesLinks = productPagesGenerator.getPagesLinks();
         List<ProductPageLink> result = new ArrayList<>();
