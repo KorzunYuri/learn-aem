@@ -1,7 +1,9 @@
 package com.adobe.aem.guides.wknd.core.servlets;
 
+import com.adobe.aem.guides.wknd.core.domains.error.JsonErrorInfo;
+import com.adobe.aem.guides.wknd.core.services.JsonUnifier;
+import com.adobe.aem.guides.wknd.core.services.PageGenerationConfigurer;
 import com.adobe.aem.guides.wknd.core.services.ProductPagesGenerator;
-import com.adobe.aem.guides.wknd.core.services.access.RunModeProvider;
 import com.adobe.aem.guides.wknd.core.services.access.impl.ProductResourceResolverProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -42,27 +44,45 @@ public class ProductPagesListServlet extends SlingSafeMethodsServlet {
     private ProductPagesGenerator productPagesGenerator;
 
     @Reference
-    private RunModeProvider runModeProvider;
+    private PageGenerationConfigurer pageGenerationConfigurer;
+
+    @Reference
+    private JsonUnifier jsonUnifier;
 
     @Override
     protected void doGet(@NotNull SlingHttpServletRequest request, @NotNull SlingHttpServletResponse response) throws ServletException, IOException {
-        if (!isProcessingRequired()) {
-            throw new IllegalStateException(String.format("Servlet %s is supposed to be used on publish environment only", this.getClass().getName()));
-        }
-        try (ResourceResolver resourceResolver = resourceResolverProvider.getResourceResolver()) {
-            List<String> pagesPaths = productPagesGenerator.getPagesLinks();
-            JSONObject result = new JSONObject();
-            JSONArray pagesArray = new JSONArray();
-            try {
-                for (String path : pagesPaths) {
-                    pagesArray.put(makePageJson(path, resourceResolver));
+        JSONObject result = new JSONObject();
+        try {
+            if (isProcessingRequired()) {
+                try (ResourceResolver resourceResolver = resourceResolverProvider.getResourceResolver()) {
+                    List<String> pagesPaths = productPagesGenerator.getPagesLinks();
+                    JSONArray pagesArray = new JSONArray();
+                    try {
+                        for (String path : pagesPaths) {
+                            pagesArray.put(makePageJson(path, resourceResolver));
+                        }
+                        result.put("pages", pagesArray);
+                    } catch (Exception e) {
+                        log.error(String.format("Failed to export product pages"));
+                    }
                 }
-                result.put("pages", pagesArray);
-            } catch (Exception e) {
-                log.error(String.format("Failed to export product pages"));
+                try {
+                    result = jsonUnifier.finalize(result);
+                } catch (JSONException e) {
+                    log.error("Unable to unify resulting json");
+                }
+            } else {
+                result = jsonUnifier.finalize(
+                        result,
+                        JsonErrorInfo.builder()
+                                .message("Page generation retrieval is disabled")
+                            .build()
+                );
             }
-            response.getWriter().write(result.toString());
+        } catch (JSONException e) {
+            log.error("Unable to make json response");
         }
+        response.getWriter().write(result.toString());
     }
 
     private JSONObject makePageJson(String path, ResourceResolver resourceResolver) throws org.json.JSONException {
@@ -81,7 +101,7 @@ public class ProductPagesListServlet extends SlingSafeMethodsServlet {
     }
 
     private boolean isProcessingRequired() {
-        return this.runModeProvider.isPublish();
+        return this.pageGenerationConfigurer.isRetrievalEnabled();
     }
 
 }

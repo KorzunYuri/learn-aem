@@ -2,11 +2,7 @@ package com.adobe.aem.guides.wknd.core.services.impl;
 
 import com.adobe.aem.guides.wknd.core.domains.product.ProductConstants;
 import com.adobe.aem.guides.wknd.core.domains.product.Product;
-import com.adobe.aem.guides.wknd.core.services.ProductPagesGenerator;
-import com.adobe.aem.guides.wknd.core.services.ProductPagesListRequest;
-import com.adobe.aem.guides.wknd.core.services.ProductService;
-import com.adobe.aem.guides.wknd.core.services.ProductsRequestParams;
-import com.adobe.aem.guides.wknd.core.services.access.RunModeProvider;
+import com.adobe.aem.guides.wknd.core.services.*;
 import com.adobe.aem.guides.wknd.core.services.access.impl.ProductResourceResolverProvider;
 import com.day.cq.search.PredicateGroup;
 import com.day.cq.search.Query;
@@ -67,7 +63,7 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
     private QueryBuilder queryBuilder;
 
     @Reference
-    private RunModeProvider runModeProvider;
+    private PageGenerationConfigurer pageGenerationConfigurer;
 
     @ObjectClassDefinition(
             name = "Product pages generator configuration"
@@ -111,22 +107,26 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
 
     @Override
     public void updateProductPages() {
-        if (!runModeProvider.isAuthor()) {
-            throw new IllegalStateException("Product page generation is for author instance only");
+
+        if (!this.pageGenerationConfigurer.isGenerationEnabled()) {
+            log.error("Product page generation is switched off");
+            return;
         }
+
         if (StringUtils.isEmpty(pagesPathRoot)) {
             log.error("Page path root is not provided! Configure the service correctly");
             throw new IllegalArgumentException(String.format("%s is not configured correctly", this.getClass().getName()));
         }
 
+        //  get products
         List<Product> products = productService.getProducts(ProductsRequestParams.builder()
                         .limit(LIMIT_UNLIMITED)
                         .shuffle(false)
                 .build());
 
-        // TODO remove pages for products that are not present in fetched data
+        //  remove expired pages if needed
         if (!keepOldPages) {
-
+            // TODO remove pages for products that are not present in fetched data
         }
 
         //  get JCR/page tools
@@ -311,6 +311,5 @@ public class ProductPagesGeneratorImpl implements ProductPagesGenerator {
     private String getPageName(Product product) {
         return String.format("product%s", product.getId());
     }
-
 
 }

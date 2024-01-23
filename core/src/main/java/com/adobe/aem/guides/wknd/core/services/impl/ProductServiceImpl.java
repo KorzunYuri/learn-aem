@@ -81,6 +81,7 @@ public class ProductServiceImpl implements ProductService {
             ,   type = AttributeType.INTEGER
         )
         int unused_property() default 1;
+
     }
 
     @Reference
